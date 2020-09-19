@@ -5,7 +5,7 @@ body {
 .main {
   display: flex;
   justify-content: space-between;
-  padding: 10em;
+  padding: 12em 10em 0em 10em;
 }
 
 .card {
@@ -27,4 +27,12 @@ body {
   border: lightgreen 1px solid;
   box-shadow: 0em 0em 2em 1em #ffeaa7;
   background: url(assets/back.png) 0em -4em/16em no-repeat;
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 14em;
+  color:rgb(31, 57, 79);
+  font-size: larger;
 }
