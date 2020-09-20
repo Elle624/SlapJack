@@ -1,16 +1,92 @@
-var Player = require('../player.js');
-var fullDeck = [
-  'assets/blue-01.png','assets/blue-02.png','assets/blue-03.png','assets/blue-04.png','assets/blue-05.png','assets/blue-06.png','assets/blue-07.png','assets/blue-08.png',
-  'assets/blue-09.png','assets/blue-10.png','assets/blue-jack.png','assets/blue-king.png','assets/blue-queen.png','assets/gold-01.png','assets/gold-02.png','assets/gold-03.png','assets/gold-04.png','assets/gold-05.png','assets/gold-06.png','assets/gold-07.png','assets/gold-08.png','assets/gold-09.png','assets/gold-10.png','assets/gold-jack.png','assets/gold-king.png','assets/gold-queen.png','assets/green-01.png','assets/green-02.png','assets/green-03.png','assets/green-04.png','assets/green-05.png','assets/green-06.png','assets/green-07.png','assets/green-08.png',
-  'assets/green-09.png','assets/green-10.png','assets/green-jack.png','assets/green-king.png','assets/green-queen.png','assets/red-01.png','assets/red-02.png','assets/red-03.png','assets/red-04.png','assets/red-05.png','assets/red-06.png','assets/red-07.png','assets/red-08.png',
-  'assets/red-09.png','assets/red-10.png','assets/red-jack.png','assets/red-king.png','assets/red-queen.png',
-]
-
-var player1 = new Player();
-var player2 = new Player();
+var player1 = new Player('Elle');
+var player2 = new Player('Isabel');
 
 class Game {
-  constructor() {
-
+  constructor(player1, player2) {
+    this.player1 = player1.name;
+    this.player2 = player2.name;
+    this.fullDeck = fullDeck;
+    this.centralPile = [];
+    this.playerTurn = 1;
   }
+
+  getRandomIndex(player) {
+    var cardsArray = player.hand;
+    return Math.floor(Math.random() * cardsArray.length);
+  }
+
+  dealDeckOut(player1, player2) {
+    player1.hand = fullDeck.slice(0,26);
+    player2.hand = fullDeck.slice(26);
+  }
+  
+  shuffle(player) {
+    var newHand = [];
+    var arrayLength = player.hand.length;
+    for (var i = 0; i< arrayLength; i++ ) {
+      var randomNum = this.getRandomIndex(player);
+      var randomCard = player.hand[randomNum];
+      newHand.push(randomCard);
+      player.hand.splice(randomNum, 1);
+    }
+    player.hand = newHand;
+  }
+
+  updateCentralPile(card) {
+    this.centralPile.unshift(card);
+  }
+
+  dealACard(player) {
+    var topCard = player.hand[0];
+    this.updateCentralPile(topCard);
+    player.hand.splice(0,1);
+    if (player.name === player1.name) {
+      this.playerTurn = 2;
+    } else {
+      this.playerTurn = 1;
+    }
+  }
+
+  reducePlayerHand(player) {
+    if (player === player1) {
+      player2.hand.push(player.hand[0]);
+      player.hand.splice(0,1);
+    } else {
+      player1.hand.push(player.hand[0]);
+      player.hand.splice(0,1);
+    } 
+  }
+  updatePlayerHand(player) {
+    player.hand = player.hand.concat(this.centralPile);
+    this.centralPile = [];
+    this.shuffle(player);
+  }
+
+  slap(player) {
+    var top3Cards = this.centralPile.slice(0,3);
+    if (top3Cards[0].number === 'jack' || 
+    top3Cards[0].number === top3Cards[1].number || 
+    top3Cards[0].number === top3Cards[2].numebr ) {
+      this.updatePlayerHand(player);
+    } else {
+      this.reducePlayerHand(player);
+    }
+  }
+
+  updateWins(player) {
+    player.wins ++;
+    this.centralPile = [];
+    this.dealDeckOut(player1, player2);
+  }
+
 }
+// var game = new Game(player1,player2);
+
+
+
+
+
+
+
+
+
