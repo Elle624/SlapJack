@@ -47,7 +47,7 @@ class Game {
     }
   }
 
-  updatePlayerHand(player) {
+  reducePlayerHand(player) {
     if (player === player1) {
       player2.hand.push(player.hand[0]);
       player.hand.splice(0,1);
@@ -56,17 +56,20 @@ class Game {
       player.hand.splice(0,1);
     } 
   }
+  updatePlayerHand(player) {
+    player.hand = player.hand.concat(this.centralPile);
+    this.centralPile = [];
+    this.shuffle(player);
+  }
 
   slap(player) {
     var top3Cards = this.centralPile.slice(0,3);
     if (top3Cards[0].number === 'jack' || 
     top3Cards[0].number === top3Cards[1].number || 
     top3Cards[0].number === top3Cards[2].numebr ) {
-      player.hand = player.hand.concat(this.centralPile);
-      this.centralPile = [];
-      this.shuffle(player);
-    } else {
       this.updatePlayerHand(player);
+    } else {
+      this.reducePlayerHand(player);
     }
   }
 
