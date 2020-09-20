@@ -36,7 +36,14 @@ class Game {
   updateCentralPile(card) {
     this.centralPile.unshift(card);
   }
-  
+
+  dealACard(player) {
+    var topCard = player.hand[0]
+    this.updateCentralPile(topCard)
+    player.hand.splice(0,1);
+    player.turn = false;
+  }
+
 }
 //var game = new Game(player1,player2)
 
