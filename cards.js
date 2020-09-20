@@ -52,6 +52,3 @@ var fullDeck = [
   {name:'assets/red-king.png', number:'king', color:'red'},
   {name:'assets/red-queen.png', number:'queen', color:'red'}
 ]
-
-var player1Cards = fullDeck.slice(0,26);
-var player2Cards = fullDeck.slice(26);
