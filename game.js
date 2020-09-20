@@ -3,8 +3,8 @@ var player2 = new Player('Isabel');
 
 class Game {
   constructor(player1, player2) {
-    this.player1 = player1.name;
-    this.player2 = player2.name;
+    this.player1 = player1;
+    this.player2 = player2;
     this.fullDeck = fullDeck;
     this.centralPile = [];
     this.playerTurn = 1;
@@ -80,7 +80,7 @@ class Game {
   }
 
 }
-// var game = new Game(player1,player2);
+
 
 
 
