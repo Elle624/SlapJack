@@ -70,6 +70,12 @@ class Game {
     }
   }
 
+  updateWins(player) {
+    player.wins ++;
+    this.centralPile = [];
+    this.dealDeckOut(player1, player2);
+  }
+
 }
 // var game = new Game(player1,player2);
 
