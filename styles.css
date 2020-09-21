@@ -1,8 +1,12 @@
+.hidden {
+  visibility: hidden;
+}
+
 body {
   background-color: #EDD3C4;
 }
 
-.main {
+.game {
   display: flex;
   justify-content: space-between;
   padding: 12em 10em 0em 10em;
@@ -13,18 +17,17 @@ body {
   width: 16em;
   border-radius: 1em;
   border: lightblue 1px solid;
-  box-shadow: 0em 0em 1em 0em #ff7675;
   background: url(assets/red-07.png) 0em -4em/16em no-repeat;
 }
 
 .player-one {
-  border: lightpink 1px solid;
+  border: #74b9ff 1px solid;
   box-shadow: 0em 0em 2em 1em #74b9ff;
   background: url(assets/back.png) 0em -4em/16em no-repeat;
 }
 
 .player-two {
-  border: lightgreen 1px solid;
+  border: #ffeaa7 1px solid;
   box-shadow: 0em 0em 2em 1em #ffeaa7;
   background: url(assets/back.png) 0em -4em/16em no-repeat;
 }

@@ -6,7 +6,9 @@ class Player {
     this.hand = [];
   }
   playCard() {
-
+    var topCard = this.hand[0];
+    this.hand.splice(0,1);
+    return topCard;
   }
 
   saveWinsToStorage() {
