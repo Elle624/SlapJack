@@ -2,7 +2,7 @@ class Player {
   constructor(name) {
     this.name = name;
     this.id = Date.now();
-    this.wins = 0;
+    this.wins = JSON.parse(localStorage.getItem(`${this.name}Wins`)) || 0;
     this.hand = [];
   }
   playCard() {
@@ -12,6 +12,6 @@ class Player {
   }
 
   saveWinsToStorage() {
-    
+    localStorage.setItem(`${this.name}Wins`, this.wins)
   }
 }

@@ -8,11 +8,12 @@ window.addEventListener('keyup', startGame);
 function displayDecks() {
   game.shuffle();
   game.dealDeckOut(game.player1, game.player2);
-
   cardsPiles.innerHTML=
   `<div class="card player-one" style="background: url(assets/back.png) 0em -4em/16em no-repeat"></div>
   <div class="card central-pile hidden"></div>
   <div class="card player-two" style="background: url(assets/back.png) 0em -4em/16em no-repeat"></div>`
+  scores[0].innerText = `${game.player1.wins} Wins`;
+  scores[1].innerText = `${game.player2.wins} Wins`;
 }
 
 function startGame() {
