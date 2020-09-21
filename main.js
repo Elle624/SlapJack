@@ -66,12 +66,20 @@ function checkPlayerSlap(keyValue, player) {
     {turn: 1, keyValue:'q', player: game.player1, decksIndex: 0},
     {turn: 2, keyValue:'p', player: game.player2, decksIndex: 2}
   ];
+  resolvePlayerSlap(keyValue, element, player, players);
+}
+
+function resolvePlayerSlap(keyValue, element, player, players) {
   if (event.key === keyValue) {
     game.slap(player);
-    game.centralPile.length>0? element.remove('hidden') : element.add('hidden');
     updatePlayerDeck(players)
     scores[0].innerText = `${game.player1.wins} Wins`;
     scores[1].innerText = `${game.player2.wins} Wins`;
+  }
+  if (event.key === keyValue && game.centralPile.length > 0) {
+    element.remove('hidden');
+  } else if (event.key === keyValue) {
+    element.add('hidden');
   }
 }
 

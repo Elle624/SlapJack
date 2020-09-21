@@ -107,6 +107,7 @@ class Game {
 
   updateWins(player) {
     player.wins ++;
+    player.saveWinsToStorage();
     this.centralPile = [];
     this.dealDeckOut(this.player1, this.player2);
   }
