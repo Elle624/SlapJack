@@ -37,9 +37,8 @@ class Game {
   }
 
   dealACard(player) {
-    var topCard = player.hand[0];
+    var topCard = player.playCard();
     this.updateCentralPile(topCard);
-    player.hand.splice(0,1);
     if (player.name === player1.name) {
       this.playerTurn = 2;
     } else {
@@ -62,15 +61,19 @@ class Game {
     this.shuffle(player);
   }
 
-  slap(player) {
+  checkGoodSlap() {
     var top3Cards = this.centralPile.slice(0,3);
-    if (top3Cards[0].number === 'jack' || 
-    top3Cards[0].number === top3Cards[1].number || 
-    top3Cards[0].number === top3Cards[2].numebr ) {
-      this.updatePlayerHand(player);
+    return top3Cards[0].number === 'jack' || 
+           top3Cards[0].number === top3Cards[1].number || 
+           top3Cards[0].number === top3Cards[2].numebr
+  }
+
+  slap(player) {
+    if (this.centralPile.length<3 || !this.checkGoodSlap()) {
+      return this.reducePlayerHand(player)
     } else {
-      this.reducePlayerHand(player);
-    }
+      this.updatePlayerHand(player);
+    } 
   }
 
   updateWins(player) {
