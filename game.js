@@ -71,18 +71,20 @@ class Game {
 
   checkGoodSlap() {
     var top3Cards = this.centralPile.slice(0,3);
-    return top3Cards[0].number === 'jack' || 
-           top3Cards[0].number === top3Cards[1].number || 
-           top3Cards[0].number === top3Cards[2].number
+    if (top3Cards[0] && top3Cards[0].number === 'jack') {
+      return true;
+    } else if (top3Cards[1] && top3Cards[0].number === top3Cards[1].number) {
+      return true;
+    } else if (top3Cards[2] && top3Cards[0].number === top3Cards[2].number) {
+      return true;
+    }
   }
 
   slap(player) {
-    if (this.centralPile[0].number === 'jack' || this.centralPile[0].number === this.centralPile[1].number) {
-      this.updatePlayerHand(player)
-    } else if (this.centralPile.length<3 || !this.checkGoodSlap()) {
-      this.reducePlayerHand(player)
+    if (this.checkGoodSlap()) {
+      this.updatePlayerHand(player);
     } else {
-      this.updatePlayerHand(player)
+      this.reducePlayerHand(player);
     }
   }
 
