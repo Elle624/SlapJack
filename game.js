@@ -12,8 +12,8 @@ class Game {
   }
 
   dealDeckOut(player1, player2) {
-    player1.hand = this.fullDeck.slice(0,26);
-    player2.hand = this.fullDeck.slice(26);
+    player1.hand = this.fullDeck.slice(0,6);
+    player2.hand = this.fullDeck.slice(6,11);
   }
   
   shuffle(player) {
@@ -85,6 +85,23 @@ class Game {
     } else {
       this.reducePlayerHand(player);
     }
+    this.endGame(player);
+  }
+
+  endGame(player) {
+    if (player === this.player1 && player.hand.length === 0 && !this.checkGoodSlap()) {
+      console.log("end game")
+      this.updateWins(this.player2)
+    } else if (player === this.player1 && player.hand.length === 0 && this.slap(this.player2)) {
+      console.log("end game")
+      this.updateWins(this.player2)
+    } else if (player === this.player2 && player.hand.length === 0 && !this.checkGoodSlap()) {
+      console.log("end game")
+      this.updateWins(this.player1)
+    } else if (player === this.player2 && player.hand.length === 0 && this.slap(this.player1)) {
+      console.log("end game")
+      this.updateWins(this.player1)
+    }
   }
 
   updateWins(player) {
@@ -93,13 +110,11 @@ class Game {
     this.dealDeckOut(this.player1, this.player2);
   }
 
-  dealMultipleCards(players) {
-    for (var i = 0; i < players.length; i++) {
-      if (players[i].player === this.player1) {
-        return this.playerTurn = 2;
-      } else {
-        return this.playerTurn = 1;
-      }
+  dealMultipleCards(player) {
+    if (player.player === this.player1) {
+      return this.playerTurn = 2;
+    } else {
+      return this.playerTurn = 1;
     }
   }
 }
