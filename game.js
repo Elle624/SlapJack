@@ -10,35 +10,44 @@ class Game {
     this.playerTurn = 1;
   }
 
-  getRandomIndex(player) {
-    var cardsArray = player.hand;
-    return Math.floor(Math.random() * cardsArray.length);
+  getRandomIndex(array) {
+    return Math.floor(Math.random() * array.length);
   }
 
   dealDeckOut(player1, player2) {
-    player1.hand = fullDeck.slice(0,26);
-    player2.hand = fullDeck.slice(26);
+    player1.hand = this.fullDeck.slice(0,26);
+    player2.hand = this.fullDeck.slice(26);
   }
   
   shuffle(player) {
-    var newHand = [];
-    var arrayLength = player.hand.length;
+    var shuffledCards = [];
+    var cards = player ? player.hand : this.fullDeck;
+    var arrayLength = cards.length;
     for (var i = 0; i< arrayLength; i++ ) {
-      var randomNum = this.getRandomIndex(player);
-      var randomCard = player.hand[randomNum];
-      newHand.push(randomCard);
-      player.hand.splice(randomNum, 1);
+      var randomNum = this.getRandomIndex(cards);
+      var randomCard = cards[randomNum];
+      shuffledCards.push(randomCard);
+      cards.splice(randomNum, 1);
     }
-    player.hand = newHand;
+    player? player.hand = shuffledCards : this.fullDeck = shuffledCards;
   }
 
   updateCentralPile(card) {
     this.centralPile.unshift(card);
   }
 
+  checkPlayerTurn(player) {
+    if (player.name === player1.name) {
+      this.playerTurn = 2;
+    } else {
+      this.playerTurn = 1;
+    }
+  }
+
   dealACard(player) {
     var topCard = player.playCard();
     this.updateCentralPile(topCard);
+    this.checkPlayerTurn(player);
     if (player.name === player1.name) {
       this.playerTurn = 2;
     } else {
@@ -50,15 +59,18 @@ class Game {
     if (player === player1) {
       player2.hand.push(player.hand[0]);
       player.hand.splice(0,1);
+      this.checkPlayerTurn(player);
     } else {
       player1.hand.push(player.hand[0]);
       player.hand.splice(0,1);
+      this.checkPlayerTurn(player);
     } 
   }
   updatePlayerHand(player) {
     player.hand = player.hand.concat(this.centralPile);
     this.centralPile = [];
     this.shuffle(player);
+    this.checkPlayerTurn(player);
   }
 
   checkGoodSlap() {
@@ -69,7 +81,17 @@ class Game {
   }
 
   slap(player) {
-    if (this.centralPile.length<3 || !this.checkGoodSlap()) {
+    // if (this.centralPile[0].number === 'jack' || this.centralPile[0].number === this.centralPile[1].number) {
+    //   return this.updatePlayerHand(player)
+      
+    // } else if (this.centralPile.length<3 || !this.checkGoodSlap()) {
+    //   debugger
+    //   return this.reducePlayerHand(player)
+    // } else {
+    //   this.updatePlayerHand(player)
+    // }
+    
+    if (this.centralPile.length<3 || !this.checkGoodSlap()) {  
       return this.reducePlayerHand(player)
     } else {
       this.updatePlayerHand(player);
