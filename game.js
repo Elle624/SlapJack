@@ -88,18 +88,19 @@ class Game {
     this.endGame(player);
   }
 
+  slapJack(player) {
+    return this.centralPile[0].number === 'jack';
+  }
+
   endGame(player) {
-    if (player === this.player1 && player.hand.length === 0 && !this.checkGoodSlap()) {
-      console.log("end game")
+    if (player === this.player1 && player.hand.length === 0 && 
+      !this.slapJack(player)) {
       this.updateWins(this.player2)
-    } else if (player === this.player1 && player.hand.length === 0 && this.slap(this.player2)) {
-      console.log("end game")
+    } else if (player === this.player1 && player.hand.length === 0 && this.slapJack(this.player2)) {
       this.updateWins(this.player2)
-    } else if (player === this.player2 && player.hand.length === 0 && !this.checkGoodSlap()) {
-      console.log("end game")
+    } else if (player === this.player2 && player.hand.length === 0 && !this.slapJack(player)) {
       this.updateWins(this.player1)
-    } else if (player === this.player2 && player.hand.length === 0 && this.slap(this.player1)) {
-      console.log("end game")
+    } else if (player === this.player2 && player.hand.length === 0 && this.slapJack(this.player1)) {
       this.updateWins(this.player1)
     }
   }
