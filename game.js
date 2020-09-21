@@ -1,10 +1,7 @@
-var player1 = new Player('Elle');
-var player2 = new Player('Isabel');
-
 class Game {
-  constructor(player1, player2) {
-    this.player1 = player1;
-    this.player2 = player2;
+  constructor() {
+    this.player1 = new Player('player1');
+    this.player2 = new Player('player2');
     this.fullDeck = fullDeck;
     this.centralPile = [];
     this.playerTurn = 1;
@@ -15,8 +12,8 @@ class Game {
   }
 
   dealDeckOut(player1, player2) {
-    player1.hand = this.fullDeck.slice(0,2);
-    player2.hand = this.fullDeck.slice(2,14);
+    player1.hand = this.fullDeck.slice(0,26);
+    player2.hand = this.fullDeck.slice(26);
   }
   
   shuffle(player) {
@@ -37,7 +34,7 @@ class Game {
   }
 
   checkPlayerTurn(player) {
-    if (player.name === player1.name) {
+    if (player === this.player1) {
       this.playerTurn = 2;
     } else {
       this.playerTurn = 1;
@@ -51,12 +48,12 @@ class Game {
   }
 
   reducePlayerHand(player) {
-    if (player === player1) {
-      player2.hand.push(player.hand[0]);
+    if (player === this.player1) {
+      this.player2.hand.push(player.hand[0]);
       player.hand.splice(0,1);
       this.checkPlayerTurn(player);
     } else {
-      player1.hand.push(player.hand[0]);
+      this.player1.hand.push(player.hand[0]);
       player.hand.splice(0,1);
       this.checkPlayerTurn(player);
     } 
@@ -66,7 +63,7 @@ class Game {
     player.hand = player.hand.concat(this.centralPile);
     this.centralPile = [];
     this.shuffle(player);
-    if (player1.hand.length > 0 && player2.hand.length > 0) {
+    if (this.player1.hand.length > 0 && this.player2.hand.length > 0) {
       this.checkPlayerTurn(player);
     }
   }
@@ -93,12 +90,12 @@ class Game {
   updateWins(player) {
     player.wins ++;
     this.centralPile = [];
-    this.dealDeckOut(player1, player2);
+    this.dealDeckOut(this.player1, this.player2);
   }
 
-  test(players) {
+  dealMultipleCards(players) {
     for (var i = 0; i < players.length; i++) {
-      if (players[i].player === player1) {
+      if (players[i].player === this.player1) {
         return this.playerTurn = 2;
       } else {
         return this.playerTurn = 1;
