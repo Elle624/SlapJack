@@ -19,13 +19,12 @@ function startGame() {
 }
 
 function updateCentralDeck(player) {
-  var decks = document.querySelectorAll('.card');
+  var centralDeck = document.querySelector('.central-pile');
   var playerColor;
   playerColor = 
   player.name === game.player1.name ? '#74b9ff' : '#ffeaa7'
-  decks[1].innerHTML = 
-  `<div class="card central-pile" style="background-image:url(${game.centralPile[0].name});box-shadow: 0em 0em 2em 1em ${playerColor}"></div>`
-  decks[1].classList.remove('hidden');
+  centralDeck.setAttribute("style", `background-image : url(${game.centralPile[0].name}); box-shadow: 0em 0em 2em 1em ${playerColor}`)
+  centralDeck.classList.remove('hidden');
 }
 
 function updatePlayerDeck(players) {
@@ -33,8 +32,7 @@ function updatePlayerDeck(players) {
   for (var i = 0; i < players.length; i++) {
     if (players[i].player.hand.length === 0) {
       decks[players[i].decksIndex].classList.add('hidden');
-      game.dealMultipleCards(players);
-      //trigger end game function
+      game.dealMultipleCards(players[i]);
     } else {
       decks[players[i].decksIndex].classList.remove('hidden');
     }
