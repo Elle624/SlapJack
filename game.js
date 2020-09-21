@@ -15,8 +15,8 @@ class Game {
   }
 
   dealDeckOut(player1, player2) {
-    player1.hand = this.fullDeck.slice(0,26);
-    player2.hand = this.fullDeck.slice(26);
+    player1.hand = this.fullDeck.slice(0,2);
+    player2.hand = this.fullDeck.slice(2,14);
   }
   
   shuffle(player) {
@@ -66,7 +66,9 @@ class Game {
     player.hand = player.hand.concat(this.centralPile);
     this.centralPile = [];
     this.shuffle(player);
-    this.checkPlayerTurn(player);
+    if (player1.hand.length > 0 && player2.hand.length > 0) {
+      this.checkPlayerTurn(player);
+    }
   }
 
   checkGoodSlap() {
@@ -94,6 +96,15 @@ class Game {
     this.dealDeckOut(player1, player2);
   }
 
+  test(players) {
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].player === player1) {
+        return this.playerTurn = 2;
+      } else {
+        return this.playerTurn = 1;
+      }
+    }
+  }
 }
 
 
