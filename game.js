@@ -48,11 +48,6 @@ class Game {
     var topCard = player.playCard();
     this.updateCentralPile(topCard);
     this.checkPlayerTurn(player);
-    if (player.name === player1.name) {
-      this.playerTurn = 2;
-    } else {
-      this.playerTurn = 1;
-    }
   }
 
   reducePlayerHand(player) {
@@ -66,6 +61,7 @@ class Game {
       this.checkPlayerTurn(player);
     } 
   }
+
   updatePlayerHand(player) {
     player.hand = player.hand.concat(this.centralPile);
     this.centralPile = [];
@@ -77,25 +73,17 @@ class Game {
     var top3Cards = this.centralPile.slice(0,3);
     return top3Cards[0].number === 'jack' || 
            top3Cards[0].number === top3Cards[1].number || 
-           top3Cards[0].number === top3Cards[2].numebr
+           top3Cards[0].number === top3Cards[2].number
   }
 
   slap(player) {
-    // if (this.centralPile[0].number === 'jack' || this.centralPile[0].number === this.centralPile[1].number) {
-    //   return this.updatePlayerHand(player)
-      
-    // } else if (this.centralPile.length<3 || !this.checkGoodSlap()) {
-    //   debugger
-    //   return this.reducePlayerHand(player)
-    // } else {
-    //   this.updatePlayerHand(player)
-    // }
-    
-    if (this.centralPile.length<3 || !this.checkGoodSlap()) {  
-      return this.reducePlayerHand(player)
+    if (this.centralPile[0].number === 'jack' || this.centralPile[0].number === this.centralPile[1].number) {
+      this.updatePlayerHand(player)
+    } else if (this.centralPile.length<3 || !this.checkGoodSlap()) {
+      this.reducePlayerHand(player)
     } else {
-      this.updatePlayerHand(player);
-    } 
+      this.updatePlayerHand(player)
+    }
   }
 
   updateWins(player) {
