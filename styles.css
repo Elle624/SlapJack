@@ -1,5 +1,5 @@
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 body {
@@ -13,6 +13,7 @@ body {
 }
 
 .card {
+  /* position: relative; */
   height: 20em;
   width: 16em;
   border-radius: 1em;
@@ -27,10 +28,15 @@ body {
 }
 
 .player-two {
+  /* position: sticky; */
   border: #ffeaa7 1px solid;
   box-shadow: 0em 0em 2em 1em #ffeaa7;
   background: url(assets/back.png) 0em -4em/16em no-repeat;
 }
+
+/* .central-pile {
+  position: sticky;
+} */
 
 .score {
   display: flex;
