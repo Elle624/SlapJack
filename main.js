@@ -7,7 +7,7 @@ window.addEventListener('keyup', startGame);
 
 function displayDecks() {
   game.shuffle();
-  game.dealDeckOut(game.player1, game.player2);
+  game.dealDeckOut(game.player1);
   cardsPiles.innerHTML=
   `<div class="card player-one" style="background: url(assets/back.png) 0em -4em/16em no-repeat"></div>
   <div class="card central-pile hidden"></div>
