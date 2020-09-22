@@ -1,6 +1,6 @@
 # SlapJack (Solo Project)
 
-## Credits
+### Credits
 Elle Li: https://github.com/Elle624
 
 ### The link to my repo can be found here
