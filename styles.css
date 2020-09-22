@@ -35,7 +35,23 @@ body {
 .score {
   display: flex;
   justify-content: space-between;
-  padding: 1em 14em;
+  padding: 1em 13.5em;
   color:rgb(31, 57, 79);
   font-size: larger;
+}
+
+.instructions {
+  padding: 0em 9em;
+  text-align: center;
+}
+
+.instructions p {
+  font-size: 1em;
+  color: darkblue;
+}
+
+.slap-rule {
+  text-align: left;
+  width: 22em;
+  margin-top: -2em;
 }
