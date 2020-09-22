@@ -1,5 +1,4 @@
 var game = new Game();
-
 var cardsPiles = document.querySelector('.game');
 var scores = document.querySelectorAll('p');
 
@@ -16,6 +15,14 @@ function displayDecks() {
   scores[1].innerText = `${game.player2.wins} Wins`;
 }
 
+function manageClassProperty(propertyObject) {
+  if (propertyObject.add === true) {
+    propertyObject.element.classList.add('hidden')
+  } else {
+    propertyObject.element.classList.remove('hidden')
+  }
+}
+
 function startGame() {
   playersDealHand();
   slapCards();
@@ -26,18 +33,18 @@ function updateCentralDeck(player) {
   var playerColor;
   playerColor = 
   player.name === game.player1.name ? '#74b9ff' : '#ffeaa7'
-  centralDeck.setAttribute("style", `background-image : url(${game.centralPile[0].name}); box-shadow: 0em 0em 2em 1em ${playerColor}`)
-  centralDeck.classList.remove('hidden');
+  centralDeck.setAttribute("style", `background-image : url(${game.centralPile[0].name}); box-shadow: 0em 0em 2em 1em ${playerColor}`);
+  manageClassProperty({element:centralDeck});
 }
 
 function updatePlayerDeck(players) {
   var decks = document.querySelectorAll('.card');
   for (var i = 0; i < players.length; i++) {
     if (players[i].player.hand.length === 0) {
-      decks[players[i].decksIndex].classList.add('hidden');
+      manageClassProperty({element:decks[players[i].decksIndex], add: true});
       game.dealMultipleCards(players[i]);
     } else {
-      decks[players[i].decksIndex].classList.remove('hidden');
+      manageClassProperty({element:decks[players[i].decksIndex]});
     }
   }
 }
@@ -62,12 +69,11 @@ function playersDealHand() {
 
 function checkPlayerSlap(keyValue, player) {
   var centralDeck = document.querySelector('.central-pile')
-  var classElement = centralDeck.classList;
   var players = [
     {turn: 1, keyValue:'q', player: game.player1, decksIndex: 0},
     {turn: 2, keyValue:'p', player: game.player2, decksIndex: 2}
   ];
-  resolvePlayerSlap(keyValue, classElement, player, players);
+  resolvePlayerSlap(keyValue, centralDeck, player, players);
 }
 
 function resolvePlayerSlap(keyValue, element, player, players) {
@@ -78,9 +84,9 @@ function resolvePlayerSlap(keyValue, element, player, players) {
     scores[1].innerText = `${game.player2.wins} Wins`;
   }
   if (event.key === keyValue && game.centralPile.length > 0) {
-    element.remove('hidden');
+    manageClassProperty({element:element});
   } else if (event.key === keyValue) {
-    element.add('hidden');
+    manageClassProperty({element:element, add: true});
   }
 }
 
