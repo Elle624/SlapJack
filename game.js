@@ -57,8 +57,7 @@ class Game {
     otherPlayer.hand.push(player.hand[0]);
     player.hand.shift();
     this.switchPlayerTurn(player);
-    return `BAD SLAP! ${player.name} forfeits a card to ${otherPlayer.name}!`
-
+    return `BAD SLAP! ${player.name} forfeits a card to ${otherPlayer.name}!`;
   }
 
   updatePlayerHand(player) {
@@ -69,44 +68,38 @@ class Game {
     if (player.hand.length > 0 && otherPlayer.hand.length > 0) {
       this.switchPlayerTurn(player);
     }
-    return `${player.name} takes the pile!`
+    return `${player.name} takes the pile!`;
   }
 
   checkGoodSlap() {
     var top3Cards = this.centralPile.slice(0,3);
-    
-    // if (top3Cards[0].number !== 'jack' && top3Cards.length <=1) {
-    //   return false
-    // } 
-    // return ['jack', top3Cards[top3Cards.length-1].number].includes(top3Cards[0].number);
-
     if (top3Cards[0] && top3Cards[0].number === 'jack') {
       return 'SLAPJACK';
-     } else if (top3Cards[1] && top3Cards[0].number === top3Cards[1].number) {
-       return 'DOUBLE';
-       } else if (top3Cards[2] && top3Cards[1].number === top3Cards[2].number) {
-       return 'DOUBLE';
-     } else if (top3Cards[2] && top3Cards[0].number === top3Cards[2].number) {
-       return 'SANDWICH';
-     } 
+    } else if (top3Cards[1] && top3Cards[0].number === top3Cards[1].number) {
+      return 'DOUBLE';
+    } else if (top3Cards[2] && top3Cards[1].number === top3Cards[2].number) {
+      return 'DOUBLE';
+    } else if (top3Cards[2] && top3Cards[0].number === top3Cards[2].number) {
+      return 'SANDWICH';
+    } 
   }
 
   finalSlapJack(player) {
     var otherPlayer = this.findOpponent(player)
     if (otherPlayer.hand.length === 0) {
       this.updateWins(player);
-      return `${player.name} won! Start new game! Player1 deals first!`
     } else {
       this.updatePlayerHand(player);
     }
+    return `${player.name} won! Start new game! Player1 deals first!`;
   }
 
   endGame(player) {
     var otherPlayer = this.findOpponent(player);
     if (player.hand.length === 0 && !this.checkGoodSlap()) {
-      this.updateWins(otherPlayer)
+      this.updateWins(otherPlayer);
     }
-    return `${otherPlayer.name} won! Start new game! Player1 deals first!`
+    return `${otherPlayer.name} won! Start new game! Player1 deals first!`;
   }
 
   slap(player) {

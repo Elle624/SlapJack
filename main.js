@@ -73,8 +73,10 @@ function playersDealHand() {
 function displaySlapMessage(player) {
   var slapMessage = game.checkGoodSlap();
   game.slap(player);
-  if (game.centralPile <= 0 && slapMessage) {
+  if (game.centralPile <= 0 && slapMessage && !player.wins) {
     message.innerText = `${slapMessage}! ${game.updatePlayerHand(player)}`;
+  } else if (game.centralPile <= 0 && slapMessage && player.wins) {
+    message.innerText = `${game.finalSlapJack(player)}`;
   } else if (game.centralPile <= 0 && !slapMessage) {
     message.innerText = `${game.endGame(player)}`;
   } else {
@@ -85,22 +87,16 @@ function displaySlapMessage(player) {
 function displayPlayerSlap(keyValue, player) {
   var centralDeck = document.querySelector('.central-pile');
   if (event.key === keyValue) {
-   // game.slap(player)
     displaySlapMessage(player);
     updatePlayerDeck();
     scores[0].innerText = `${game.player1.wins} Wins`;
     scores[1].innerText = `${game.player2.wins} Wins`;
   }
   if (event.key === keyValue && game.centralPile.length > 0) {
-    manageClassProperty({element:centralDeck});
+    manageClassProperty({element: centralDeck});
   } else if (event.key === keyValue) {
-    manageClassProperty({element:centralDeck, add: true});
+    manageClassProperty({element: centralDeck, add: true});
   }
-}
-
-function checkPlayerSlap(keyValue, player) {
-  var centralDeck = document.querySelector('.central-pile');
-  displayPlayerSlap(keyValue, centralDeck, player);
 }
 
 function slapCards() {
