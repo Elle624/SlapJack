@@ -17,8 +17,8 @@ class Game {
 
   dealDeckOut(player) {
     var otherPlayer = this.findOpponent(player);
-    player.hand = this.fullDeck.slice(0,6);
-    otherPlayer.hand = this.fullDeck.slice(6,12);
+    player.hand = this.fullDeck.slice(0,26);
+    otherPlayer.hand = this.fullDeck.slice(26);
   }
   
   shuffle(player) {
