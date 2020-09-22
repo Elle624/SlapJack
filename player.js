@@ -7,7 +7,7 @@ class Player {
   }
   playCard() {
     var topCard = this.hand[0];
-    this.hand.splice(0,1);
+    this.hand.shift();
     return topCard;
   }
 

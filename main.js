@@ -41,12 +41,13 @@ function updatePlayerDeck(players) {
     }
   }
 }
+
 function displayDealCards(players) {
    for (var i = 0; i < players.length; i++) {
     if (game.playerTurn === players[i].turn && event.key === players[i].keyValue) {
-    game.dealACard(players[i].player);
-    updateCentralDeck(players[i].player);
-    updatePlayerDeck(players);
+      game.dealACard(players[i].player);
+      updateCentralDeck(players[i].player);
+      updatePlayerDeck(players);
     }
   } 
 }
@@ -61,12 +62,12 @@ function playersDealHand() {
 
 function checkPlayerSlap(keyValue, player) {
   var centralDeck = document.querySelector('.central-pile')
-  var element = centralDeck.classList;
+  var classElement = centralDeck.classList;
   var players = [
     {turn: 1, keyValue:'q', player: game.player1, decksIndex: 0},
     {turn: 2, keyValue:'p', player: game.player2, decksIndex: 2}
   ];
-  resolvePlayerSlap(keyValue, element, player, players);
+  resolvePlayerSlap(keyValue, classElement, player, players);
 }
 
 function resolvePlayerSlap(keyValue, element, player, players) {
