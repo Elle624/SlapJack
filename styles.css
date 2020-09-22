@@ -6,10 +6,23 @@ body {
   background-color: #EDD3C4;
 }
 
+header {
+  margin-top: 2em;
+  text-align: center;
+}
+
+.display-cards-num {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em 13.5em;
+  color:rgb(31, 57, 79);
+  font-size: larger;
+}
+
 .game {
   display: flex;
   justify-content: space-between;
-  padding: 12em 10em 0em 10em;
+  padding: 0em 10em 0em 10em;
 }
 
 .card {

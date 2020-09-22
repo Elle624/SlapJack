@@ -1,12 +1,16 @@
 var game = new Game();
+var message = document.querySelector('.message');
+var cardsNumber = document.querySelectorAll('.display-cards-num p')
 var cardsPiles = document.querySelector('.game');
-var scores = document.querySelectorAll('p');
+var scores = document.querySelectorAll('.score p');
 
 window.addEventListener('keyup', startGame);
 
 function displayDecks() {
   game.shuffle();
   game.dealDeckOut(game.player1);
+  cardsNumber[0].innerText = `${game.player1.hand.length} cards`;
+  cardsNumber[1].innerText = `${game.player2.hand.length} cards`;
   cardsPiles.innerHTML=
   `<div class="card player-one" style="background: url(assets/back.png) 0em -4em/16em no-repeat"></div>
   <div class="card central-pile hidden"></div>
@@ -38,6 +42,8 @@ function updateCentralDeck(player) {
 }
 
 function updatePlayerDeck(players) {
+  cardsNumber[0].innerText = `${game.player1.hand.length} cards`;
+  cardsNumber[1].innerText = `${game.player2.hand.length} cards`;
   var decks = document.querySelectorAll('.card');
   for (var i = 0; i < players.length; i++) {
     if (players[i].player.hand.length === 0) {
