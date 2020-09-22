@@ -1,12 +1,12 @@
 var game = new Game();
 var message = document.querySelector('.message');
-var cardsNumber = document.querySelectorAll('.display-cards-num p')
-var cardsPiles = document.querySelector('.game');
+var cardsNumber = document.querySelectorAll('.display-cards-num p');
 var scores = document.querySelectorAll('.score p');
 
 window.addEventListener('keyup', startGame);
 
 function displayDecks() {
+  var cardsPiles = document.querySelector('.game');
   game.shuffle();
   game.dealDeckOut(game.player1);
   cardsNumber[0].innerText = `${game.player1.hand.length} cards`;
@@ -21,9 +21,9 @@ function displayDecks() {
 
 function manageClassProperty(propertyObject) {
   if (propertyObject.add === true) {
-    propertyObject.element.classList.add('hidden')
+    propertyObject.element.classList.add('hidden');
   } else {
-    propertyObject.element.classList.remove('hidden')
+    propertyObject.element.classList.remove('hidden');
   }
 }
 
@@ -41,49 +41,36 @@ function updateCentralDeck(player) {
   manageClassProperty({element:centralDeck});
 }
 
-function updatePlayerDeck(players) {
+function updatePlayerDeck() {
   cardsNumber[0].innerText = `${game.player1.hand.length} cards`;
   cardsNumber[1].innerText = `${game.player2.hand.length} cards`;
   var decks = document.querySelectorAll('.card');
+  var players = [{player:game.player1, pileIndex: 0}, {player:game.player2, pileIndex: 2}]
   for (var i = 0; i < players.length; i++) {
     if (players[i].player.hand.length === 0) {
-      manageClassProperty({element:decks[players[i].decksIndex], add: true});
-      game.dealMultipleCards(players[i]);
+      manageClassProperty({element:decks[players[i].pileIndex], add: true});
+      game.dealMultipleCards(players[i].player);
     } else {
-      manageClassProperty({element:decks[players[i].decksIndex]});
+      manageClassProperty({element:decks[players[i].pileIndex]});
     }
   }
 }
 
-function displayDealCards(players) {
+function displayDealCards(keyValue, player, turn) {
   message.innerText = '';
-  for (var i = 0; i < players.length; i++) {
-    if (game.playerTurn === players[i].turn && event.key === players[i].keyValue) {
-      game.dealACard(players[i].player);
-      updateCentralDeck(players[i].player);
-      updatePlayerDeck(players);
-    }
-  } 
+  if (game.playerTurn === turn && event.key === keyValue) {
+    game.dealACard(player);
+    updateCentralDeck(player);
+    updatePlayerDeck();
+  }
 }
 
 function playersDealHand() {
-  var players = [
-    {turn: 1, keyValue:'q', player: game.player1, decksIndex: 0},
-    {turn: 2, keyValue:'p', player: game.player2, decksIndex: 2}
-  ];
-  displayDealCards(players);
+  displayDealCards('q', game.player1, 1);
+  displayDealCards('p', game.player2, 2);
 }
 
-function checkPlayerSlap(keyValue, player) {
- 
-  var centralDeck = document.querySelector('.central-pile')
-  var players = [
-    {turn: 1, keyValue:'q', player: game.player1, decksIndex: 0},
-    {turn: 2, keyValue:'p', player: game.player2, decksIndex: 2}
-  ];
-  resolvePlayerSlap(keyValue, centralDeck, player, players);
-}
-function checkSlapMessage(player) {
+function displaySlapMessage(player) {
   var slapMessage = game.checkGoodSlap();
   game.slap(player);
   if (game.centralPile <= 0 && slapMessage) {
@@ -95,23 +82,30 @@ function checkSlapMessage(player) {
   }
 }
 
-function resolvePlayerSlap(keyValue, element, player, players) {
+function displayPlayerSlap(keyValue, player) {
+  var centralDeck = document.querySelector('.central-pile');
   if (event.key === keyValue) {
-    checkSlapMessage(player)
-    updatePlayerDeck(players)
+   // game.slap(player)
+    displaySlapMessage(player);
+    updatePlayerDeck();
     scores[0].innerText = `${game.player1.wins} Wins`;
     scores[1].innerText = `${game.player2.wins} Wins`;
   }
   if (event.key === keyValue && game.centralPile.length > 0) {
-    manageClassProperty({element:element});
+    manageClassProperty({element:centralDeck});
   } else if (event.key === keyValue) {
-    manageClassProperty({element:element, add: true});
+    manageClassProperty({element:centralDeck, add: true});
   }
 }
 
+function checkPlayerSlap(keyValue, player) {
+  var centralDeck = document.querySelector('.central-pile');
+  displayPlayerSlap(keyValue, centralDeck, player);
+}
+
 function slapCards() {
-  checkPlayerSlap('f', game.player1);
-  checkPlayerSlap('j', game.player2);
+  displayPlayerSlap('f', game.player1);
+  displayPlayerSlap('j', game.player2);
 }
 
 displayDecks();

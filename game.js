@@ -38,7 +38,7 @@ class Game {
     this.centralPile.unshift(card);
   }
 
-  checkPlayerTurn(player) {
+  switchPlayerTurn(player) {
     if (player === this.player1) {
       this.playerTurn = 2;
     } else {
@@ -49,14 +49,14 @@ class Game {
   dealACard(player) {
     var topCard = player.playCard();
     this.updateCentralPile(topCard);
-    this.checkPlayerTurn(player);
+    this.switchPlayerTurn(player);
   }
 
   reducePlayerHand(player) {
     var otherPlayer = this.findOpponent(player);
     otherPlayer.hand.push(player.hand[0]);
     player.hand.shift();
-    this.checkPlayerTurn(player);
+    this.switchPlayerTurn(player);
     return `BAD SLAP! ${player.name} forfeits a card to ${otherPlayer.name}!`
 
   }
@@ -67,7 +67,7 @@ class Game {
     this.centralPile = [];
     this.shuffle(player);
     if (player.hand.length > 0 && otherPlayer.hand.length > 0) {
-      this.checkPlayerTurn(player);
+      this.switchPlayerTurn(player);
     }
     return `${player.name} takes the pile!`
   }
@@ -95,6 +95,7 @@ class Game {
     var otherPlayer = this.findOpponent(player)
     if (otherPlayer.hand.length === 0) {
       this.updateWins(player);
+      return `${player.name} won! Start new game! Player1 deals first!`
     } else {
       this.updatePlayerHand(player);
     }
@@ -105,7 +106,7 @@ class Game {
     if (player.hand.length === 0 && !this.checkGoodSlap()) {
       this.updateWins(otherPlayer)
     }
-    return `${player.name} won! Start new game! Player1 deals first!`
+    return `${otherPlayer.name} won! Start new game! Player1 deals first!`
   }
 
   slap(player) {
@@ -126,7 +127,7 @@ class Game {
   }
 
   dealMultipleCards(player) {
-    if (player.player === this.player1) {
+    if (player === this.player1) {
       return this.playerTurn = 2;
     } else {
       return this.playerTurn = 1;
