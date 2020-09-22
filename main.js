@@ -56,7 +56,8 @@ function updatePlayerDeck(players) {
 }
 
 function displayDealCards(players) {
-   for (var i = 0; i < players.length; i++) {
+  message.innerText = '';
+  for (var i = 0; i < players.length; i++) {
     if (game.playerTurn === players[i].turn && event.key === players[i].keyValue) {
       game.dealACard(players[i].player);
       updateCentralDeck(players[i].player);
@@ -74,6 +75,7 @@ function playersDealHand() {
 }
 
 function checkPlayerSlap(keyValue, player) {
+ 
   var centralDeck = document.querySelector('.central-pile')
   var players = [
     {turn: 1, keyValue:'q', player: game.player1, decksIndex: 0},
@@ -81,10 +83,21 @@ function checkPlayerSlap(keyValue, player) {
   ];
   resolvePlayerSlap(keyValue, centralDeck, player, players);
 }
+function checkSlapMessage(player) {
+  var slapMessage = game.checkGoodSlap();
+  game.slap(player);
+  if (game.centralPile <= 0 && slapMessage) {
+    message.innerText = `${slapMessage}! ${game.updatePlayerHand(player)}`;
+  } else if (game.centralPile <= 0 && !slapMessage) {
+    message.innerText = `${game.endGame(player)}`;
+  } else {
+    message.innerText = `${game.reducePlayerHand(player)}`;
+  }
+}
 
 function resolvePlayerSlap(keyValue, element, player, players) {
   if (event.key === keyValue) {
-    game.slap(player);
+    checkSlapMessage(player)
     updatePlayerDeck(players)
     scores[0].innerText = `${game.player1.wins} Wins`;
     scores[1].innerText = `${game.player2.wins} Wins`;

@@ -1,7 +1,7 @@
 class Game {
   constructor() {
-    this.player1 = new Player('player1');
-    this.player2 = new Player('player2');
+    this.player1 = new Player('Player1');
+    this.player2 = new Player('Player2');
     this.fullDeck = fullDeck;
     this.centralPile = [];
     this.playerTurn = 1;
@@ -17,8 +17,8 @@ class Game {
 
   dealDeckOut(player) {
     var otherPlayer = this.findOpponent(player);
-    player.hand = this.fullDeck.slice(0,26);
-    otherPlayer.hand = this.fullDeck.slice(26);
+    player.hand = this.fullDeck.slice(0,6);
+    otherPlayer.hand = this.fullDeck.slice(6,12);
   }
   
   shuffle(player) {
@@ -56,7 +56,9 @@ class Game {
     var otherPlayer = this.findOpponent(player);
     otherPlayer.hand.push(player.hand[0]);
     player.hand.shift();
-    this.checkPlayerTurn(player)
+    this.checkPlayerTurn(player);
+    return `BAD SLAP! ${player.name} forfeits a card to ${otherPlayer.name}!`
+
   }
 
   updatePlayerHand(player) {
@@ -67,20 +69,29 @@ class Game {
     if (player.hand.length > 0 && otherPlayer.hand.length > 0) {
       this.checkPlayerTurn(player);
     }
+    return `${player.name} takes the pile!`
   }
 
   checkGoodSlap() {
     var top3Cards = this.centralPile.slice(0,3);
+    
+    // if (top3Cards[0].number !== 'jack' && top3Cards.length <=1) {
+    //   return false
+    // } 
+    // return ['jack', top3Cards[top3Cards.length-1].number].includes(top3Cards[0].number);
+
     if (top3Cards[0] && top3Cards[0].number === 'jack') {
-     return true;
-    } else if (top3Cards[1] && top3Cards[0].number === top3Cards[1].number) {
-      return true;
-    } else if (top3Cards[2] && top3Cards[0].number === top3Cards[2].number) {
-      return true;
-    } 
+      return 'SLAPJACK';
+     } else if (top3Cards[1] && top3Cards[0].number === top3Cards[1].number) {
+       return 'DOUBLE';
+       } else if (top3Cards[2] && top3Cards[1].number === top3Cards[2].number) {
+       return 'DOUBLE';
+     } else if (top3Cards[2] && top3Cards[0].number === top3Cards[2].number) {
+       return 'SANDWICH';
+     } 
   }
 
-  slapJack(player) {
+  finalSlapJack(player) {
     var otherPlayer = this.findOpponent(player)
     if (otherPlayer.hand.length === 0) {
       this.updateWins(player);
@@ -92,13 +103,14 @@ class Game {
   endGame(player) {
     var otherPlayer = this.findOpponent(player);
     if (player.hand.length === 0 && !this.checkGoodSlap()) {
-    this.updateWins(otherPlayer)
+      this.updateWins(otherPlayer)
     }
+    return `${player.name} won! Start new game! Player1 deals first!`
   }
 
   slap(player) {
     if (this.checkGoodSlap()) {
-      this.slapJack(player)
+      this.finalSlapJack(player);
     } else {
       this.reducePlayerHand(player);
     }
