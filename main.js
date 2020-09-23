@@ -72,6 +72,7 @@ function playersDealHand() {
 
 function displaySlapMessage(player) {
   var slapMessage = game.checkGoodSlap();
+  var otherPlayer = game.findOpponent(player);
   game.slap(player);
   if (game.centralPile <= 0 && slapMessage && !player.wins) {
     message.innerText = `${slapMessage}! ${game.updatePlayerHand(player)}`;
@@ -80,7 +81,7 @@ function displaySlapMessage(player) {
   } else if (game.centralPile <= 0 && !slapMessage) {
     message.innerText = `${game.endGame(player)}`;
   } else {
-    message.innerText = `${game.reducePlayerHand(player)}`;
+    message.innerText = `BAD SLAP! ${player.name} forfeits a card to ${otherPlayer.name}!`;
   }
 }
 

@@ -57,7 +57,6 @@ class Game {
     otherPlayer.hand.push(player.hand[0]);
     player.hand.shift();
     this.switchPlayerTurn(player);
-    return `BAD SLAP! ${player.name} forfeits a card to ${otherPlayer.name}!`;
   }
 
   updatePlayerHand(player) {
