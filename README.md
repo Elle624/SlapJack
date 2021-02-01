@@ -1,10 +1,10 @@
 # SlapJack (Solo Project)
 
 ### Credits
-Elle Li: https://github.com/Elle624
+Elle Li: https://github.com/yiranli624
 
 ### The link to my repo can be found here
-https://github.com/Elle624/SlapJack
+https://github.com/yiranli624/SlapJack
 
 ### The link to the project description can be found here
 https://frontend.turing.io/projects/module-1/slapjack.html
