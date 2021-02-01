@@ -1,7 +1,7 @@
 # SlapJack (Solo Project)
 
-### Credits
-Elle Li: https://github.com/yiranli624
+### The link to deploy site can be found here
+https://yiranli624.github.io/SlapJack/
 
 ### The link to my repo can be found here
 https://github.com/yiranli624/SlapJack
