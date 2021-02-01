@@ -1,13 +1,10 @@
 # SlapJack (Solo Project)
 
-### The link to deploy site can be found here
-https://yiranli624.github.io/SlapJack/
+### [Link to deploy site](https://yiranli624.github.io/SlapJack/)
 
-### The link to my repo can be found here
-https://github.com/yiranli624/SlapJack
+### [Link to my repo](https://github.com/yiranli624/SlapJack)
 
-### The link to the project description can be found here
-https://frontend.turing.io/projects/module-1/slapjack.html
+### [Link to the project description](https://frontend.turing.io/projects/module-1/slapjack.html)
 
 ## Project Overview
 Welcome to Slapjack! This fun game requires two player to operate base on four different keys. q/f for player 1, and p/j for player 2. By pressing q or p, each player can deal a card and display in the middle pile. <br />
